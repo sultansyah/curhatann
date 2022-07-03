@@ -15,6 +15,8 @@
     @livewireStyles
 
     <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

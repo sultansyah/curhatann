@@ -19,7 +19,7 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/curhatan', [CurhatanController::class, 'index'])->name('home');
-    Route::get('/curhatan/{hashtags}', [CurhatanController::class, 'showByHashtags'])->name('home.showByHashtags');
+    Route::get('/curhatan/{hashtag}', [CurhatanController::class, 'showByHashtag'])->name('home.showByHashtag');
     Route::post('/curhatan', [CurhatanController::class, 'store'])->name('home.store');
 
     Route::get('/mengikuti', function () {

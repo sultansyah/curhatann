@@ -15,27 +15,28 @@ class CurhatanController extends Controller
         // cari cara mengambil hashtag terbanyak dibuat di dalam bulan tersebut
         // nanti ubah
         $hashtags = Hashtags::all();
+        $curhatans = Curhatan::all();
 
-        return view('home')->with(compact('hashtags'));
+        return view('home')->with(compact('curhatans', 'hashtags'));
     }
 
-    public function showByHashtags($hashtags)
+    public function showByHashtag($hashtag)
     {
-        $hashtags = Hashtags::where('hashtags', $hashtags);
-        dump($hashtags);
+        $hashtag = Hashtags::where('hashtag', $hashtag);
+        dump($hashtag);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'judul' => 'required',
-            'hashtags' => 'required'
+            'hashtags' => 'required',
         ]);
 
         Curhatan::create([
             'judul' => $request->judul,
             'hashtags' => $request->hashtags,
-            'isi' => $request->wysiwyg_editor,
+            'isi' => $request->isi,
             'user_id' => Auth::id()
         ]);
 

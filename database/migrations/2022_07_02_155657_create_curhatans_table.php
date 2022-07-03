@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->longText('hashtags');
-            $table->longText('isi');
+            $table->longText('isi')->nullable();
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
             $table->timestamps();
@@ -31,11 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('curhatans', function (Blueprint $table) {
-            $table->dropForeign('curhatans_user_id_foreign');
-            $table->dropIndex('curhatans_user_id_index');
-            $table->dropColumn('user_id');
-        });
         Schema::dropIfExists('curhatans');
     }
 };
