@@ -1,6 +1,6 @@
 <div>
     <aside class="w-64" aria-label="Sidebar">
-        <div class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
+        <div class="pr-4 overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800">
             <a href="{{ route('hashtags') }}" class="flex items-center pl-2.5 mb-5">
                 <!-- <img src="" class="mr-3 h-6 sm:h-7"> -->
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Trending
