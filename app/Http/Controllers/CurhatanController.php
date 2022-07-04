@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Hashtags;
 use App\Models\Curhatan;
@@ -15,7 +16,11 @@ class CurhatanController extends Controller
         // cari cara mengambil hashtag terbanyak dibuat di dalam bulan tersebut
         // nanti ubah
         $hashtags = Hashtags::all();
-        $curhatans = Curhatan::all();
+
+        $curhatans = DB::table('curhatans')
+            ->join('users', 'curhatans.user_id', '=', 'users.id')
+            ->select('users.profile_photo_path', 'users.name', 'curhatans.*')
+            ->get();
 
         return view('home')->with(compact('curhatans', 'hashtags'));
     }
