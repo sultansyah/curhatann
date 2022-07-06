@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Hashtags;
 use App\Models\Curhatan;
+use App\Models\KomentarCurhatan;
 
 class CurhatanController extends Controller
 {
@@ -22,7 +23,13 @@ class CurhatanController extends Controller
             ->select('users.profile_photo_path', 'users.name', 'curhatans.*')
             ->get();
 
-        return view('home')->with(compact('curhatans', 'hashtags'));
+        $komentars = DB::table('komentar_curhatans')
+            ->join('curhatans', 'curhatans.id', '=', 'komentar_curhatans.curhatan_id')
+            ->join('users', 'users.id', '=', 'komentar_curhatans.user_id')
+            ->select('komentar_curhatans.*', 'users.name', 'users.profile_photo_path')
+            ->get();
+
+        return view('home')->with(compact('curhatans', 'hashtags', 'komentars'));
     }
 
     public function showByHashtag($hashtag)
