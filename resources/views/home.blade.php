@@ -49,8 +49,9 @@
                             @endif
                             <div class="">
                                 <div class="flex items-center justify-between">
-                                    <h2 class="text-sm font-semibold text-gray-900 -mt-1">{{ $curhatan->name }}</h2>
-                                    <small class="text-sm text-gray-700 pl-5">{{ $curhatan->created_at }}</small>
+                                    <h2 class="text-sm font-bold text-gray-900 -mt-1">{{ $curhatan->name }}</h2>
+                                    <small
+                                        class="text-sm text-gray-700 pl-5">{{date('F d, Y',strtotime($curhatan->created_at)) }}</small>
                                     <div class="pl-10">
                                         <button type="button"
                                             class="closeCurhatan bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 inline-flex h-8 w-8 dark:text-gray-500 dark:bg-white"
@@ -65,7 +66,7 @@
                                         </button>
                                     </div>
                                 </div>
-                                <p class="text-gray-700 text-sm -mt-3">Deskripsi</p>
+                                <p class="text-gray-700 text-sm -mt-3">{{ $curhatan->hashtags }}</p>
                                 <div class="font-bold text-lg text-gray-900 mt-1">
                                     {!! $curhatan->judul !!}
                                 </div>

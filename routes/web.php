@@ -21,7 +21,7 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/curhatan', [CurhatanController::class, 'index'])->name('home');
-    Route::get('/curhatan/{hashtag}', [CurhatanController::class, 'showByHashtag'])->name('home.showByHashtag');
+    Route::get('/curhatan/tag/{hashtag}', [CurhatanController::class, 'showByHashtag'])->name('home.showByHashtag');
     Route::post('/curhatan', [CurhatanController::class, 'store'])->name('home.store');
 
     Route::post('/love/update/{curhatan_id}', [LoveController::class, 'update']);

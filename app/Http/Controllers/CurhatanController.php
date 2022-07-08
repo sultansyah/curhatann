@@ -42,8 +42,28 @@ class CurhatanController extends Controller
 
     public function showByHashtag($hashtag)
     {
-        $hashtag = Hashtags::where('hashtag', $hashtag);
-        dump($hashtag);
+        $hashtags = Hashtags::all();
+
+        $curhatans = DB::table('curhatans')
+            ->join('users', 'curhatans.user_id', '=', 'users.id')
+            ->select('users.profile_photo_path', 'users.name', 'curhatans.*')
+            ->where('hashtags', 'like', '%' . $hashtag . '%')
+            ->get();
+
+        $count_loves = DB::table('love_curhatans')
+            ->join('curhatans', 'curhatans.id', '=', 'love_curhatans.curhatan_id')
+            ->join('users', 'users.id', '=', 'love_curhatans.user_id')
+            ->select(DB::raw('count(love_curhatans.id) as love_count, love_curhatans.curhatan_id'))
+            ->groupBy('love_curhatans.curhatan_id')
+            ->get();
+
+        $komentars = DB::table('komentar_curhatans')
+            ->join('curhatans', 'curhatans.id', '=', 'komentar_curhatans.curhatan_id')
+            ->join('users', 'users.id', '=', 'komentar_curhatans.user_id')
+            ->select('komentar_curhatans.*', 'users.name', 'users.profile_photo_path')
+            ->get();
+
+        return view('home')->with(compact('curhatans', 'hashtags', 'komentars', 'count_loves'));
     }
 
     public function store(Request $request)
@@ -52,6 +72,16 @@ class CurhatanController extends Controller
             'judul' => 'required',
             'hashtags' => 'required',
         ]);
+
+        $hashtags = explode("#", $request->hashtags);
+
+        foreach ($hashtags as $hashtag) {
+            if ($hashtag != "") {
+                Hashtags::create([
+                    'hashtag' => $hashtag
+                ]);
+            }
+        }
 
         Curhatan::create([
             'judul' => $request->judul,
