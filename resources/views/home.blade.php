@@ -74,11 +74,34 @@
                                 </div>
                                 <div class="mt-4 flex items-center">
                                     <div class="flex mr-2 text-gray-700 text-sm mr-3">
-                                        <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                        </svg>
-                                        <span>12</span>
+                                        @php
+                                        $love = 0;
+                                        @endphp
+
+                                        @foreach($count_loves as $count_love)
+                                        @if($curhatan->id == $count_love->curhatan_id)
+
+                                        @php
+                                        $love += $count_love->love_count;
+                                        @endphp
+
+                                        @endif
+                                        @endforeach
+
+                                        <div>
+                                            <input type="hidden" value="{{ $curhatan->id }}" name="curhatan_id"
+                                                id="curhatan_id">
+                                            <button class="love-curhatan" id="ajax-love-curhatan" title="love"
+                                                type="submit">
+                                                <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1"
+                                                    stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                                </svg>
+                                            </button>
+                                            <span>{{ $love}}</span>
+                                        </div>
                                     </div>
                                     <div class="flex mr-2 text-gray-700 text-sm mr-8">
                                         <button class="btnKomentar" title="komentar"
@@ -324,6 +347,29 @@
     <!-- button to toggle modal -->
     <script type="text/javascript">
     $(document).ready(function() {
+
+        $('#ajax-love-curhatan').click(function(e) {
+            e.preventDefault();
+            var curhatan_id = $("#curhatan_id").val();
+
+            console.log("curhatan_id = " + curhatan_id)
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: "POST",
+                url: '/love/update/' + curhatan_id,
+                data: {
+                    curhatan_id: curhatan_id
+                },
+                success: function(result) {
+                    alert(result);
+                }
+            });
+        });
+
+
         $('.openModal').on('click', function(e) {
             $('#large-modal').removeClass('hidden');
         });

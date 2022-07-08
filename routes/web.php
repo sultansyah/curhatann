@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\CurhatanController;
 use App\Http\Controllers\KomentarCurhatanController;
+use App\Http\Controllers\LoveController;
+use Laravel\Jetstream\Rules\Role;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,7 +24,12 @@ Route::middleware([
     Route::get('/curhatan/{hashtag}', [CurhatanController::class, 'showByHashtag'])->name('home.showByHashtag');
     Route::post('/curhatan', [CurhatanController::class, 'store'])->name('home.store');
 
+    Route::post('/love/update/{curhatan_id}', [LoveController::class, 'update']);
+
     Route::post('/komentar_curhatan', [KomentarCurhatanController::class, 'store'])->name('komentar_curhatan.store');
+
+    Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');
+
 
     Route::get('/mengikuti', function () {
         return view('mengikuti');
@@ -39,6 +46,4 @@ Route::middleware([
     Route::get('/notifikasi', function () {
         return view('notifikasi');
     })->name('notifikasi');
-
-    Route::post('/ckeditor/upload', [CKEditorController::class, 'upload'])->name('ckeditor.image-upload');
 });
