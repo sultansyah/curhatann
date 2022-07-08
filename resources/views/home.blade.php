@@ -91,8 +91,8 @@
                                         <div>
                                             <input type="hidden" value="{{ $curhatan->id }}" name="curhatan_id"
                                                 id="curhatan_id">
-                                            <button class="love-curhatan" id="ajax-love-curhatan" title="love"
-                                                type="submit">
+                                            <button class="ajax-love-curhatan" title="love" type="submit"
+                                                onclick="love('{{ $curhatan->id }}')">
                                                 <svg fill="none" viewBox="0 0 24 24" class="w-4 h-4 mr-1"
                                                     stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -347,29 +347,6 @@
     <!-- button to toggle modal -->
     <script type="text/javascript">
     $(document).ready(function() {
-
-        $('#ajax-love-curhatan').click(function(e) {
-            e.preventDefault();
-            var curhatan_id = $("#curhatan_id").val();
-
-            console.log("curhatan_id = " + curhatan_id)
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: "POST",
-                url: '/love/update/' + curhatan_id,
-                data: {
-                    curhatan_id: curhatan_id
-                },
-                success: function(result) {
-                    alert(result);
-                }
-            });
-        });
-
-
         $('.openModal').on('click', function(e) {
             $('#large-modal').removeClass('hidden');
         });
@@ -390,6 +367,26 @@
         } else if ($(id).hasClass('hidden')) {
             $(id).removeClass('hidden');
         }
+    }
+
+    function love(curhatan_id) {
+        event = event || window.event;
+        event.preventDefault();
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: '/love/update/' + curhatan_id,
+            data: {
+                curhatan_id: curhatan_id
+            },
+            success: function() {
+                window.location.reload();
+            }
+        });
+
     }
 
     // method untuk menghapus konten

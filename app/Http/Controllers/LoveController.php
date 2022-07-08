@@ -17,12 +17,11 @@ class LoveController extends Controller
                 'user_id' => Auth::id(),
                 'curhatan_id' => $curhatan_id,
             ]);
-            return 2;
+            return back();
         }
 
         if ($curhatan->user_id == Auth::id()) {
             $curhatan->delete();
-            return 1;
         }
     }
 }

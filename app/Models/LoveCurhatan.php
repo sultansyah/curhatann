@@ -9,5 +9,5 @@ class LoveCurhatan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['isLove'];
+    protected $fillable = ['user_id', 'curhatan_id'];
 }
